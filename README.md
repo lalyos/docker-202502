@@ -127,3 +127,10 @@ docker buildx build \
   --platform linux/arm64/v8,linux/amd64 \
   --tag ttl.sh/lalyos/web .
 ```
+
+## Multi container - nginx + mariadb + menugenerator
+
+
+```
+docker run -dP -v www:/usr/share/nginx/html     nginx
+```
