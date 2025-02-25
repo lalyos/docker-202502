@@ -125,12 +125,34 @@ To build an image for multiple platforms:
 docker buildx build \
   --push \
   --platform linux/arm64/v8,linux/amd64 \
-  --tag ttl.sh/lalyos/web .
+  --tag ttl.sh/generator .
 ```
 
 ## Multi container - nginx + mariadb + menugenerator
 
 
+start of the web server:
 ```
-docker run -dP -v www:/usr/share/nginx/html     nginx
+docker run -dP \
+  --name web \
+  -v www:/usr/share/nginx/html \
+  nginx
+```
+
+start the db
+```
+docker run -d \
+  -e MARIADB_ROOT_PASSWORD=s3cr3t \
+  -v etlapdb:/var/lib/mysql \
+  -v $PWD/sql:/docker-entrypoint-initdb.d \
+  --name mariska  \
+  mariadb
+```
+
+start the menu gerator
+```
+docker run -d \
+  -v www:/www \
+  --link mariska:db \
+  ttl.sh/generator
 ```
