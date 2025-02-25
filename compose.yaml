@@ -1,0 +1,24 @@
+services:
+  www:
+    image: nginx
+    ports:
+    - 80
+    volumes:
+    - www:/usr/share/nginx/html
+
+  db:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: s3cr3t
+    volumes:
+    - etlapdb:/var/lib/mysql
+    - ./sql:/docker-entrypoint-initdb.d
+
+  generator:
+    image: ttl.sh/generator
+    volumes:
+    -  www:/www
+
+volumes:
+  www:
+  etlapdb:
