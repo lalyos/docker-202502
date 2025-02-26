@@ -9,7 +9,6 @@
 ## Dockerfile
 
 
-
 ```
 docker build -t web .
 docker run -d -p 9876:80 web
@@ -164,3 +163,72 @@ docker run -d \
   --link mariska:db \
   ttl.sh/generator
 ```
+
+## Healthcheck
+
+Usual helthcheck for web apps
+
+```
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 10s
+      timeout: 1s
+      retries: 0
+
+```
+
+Artifical unhealthy:
+```
+docker compose exec  www \
+  mv /usr/share/nginx/html/index.html /usr/share/nginx/html/index.html.bak
+```
+
+www container becomes unhealthy
+```
+docker compose ps
+NAME                     IMAGE     COMMAND                  SERVICE   CREATED         STATUS                     PORTS
+docker-training2-db-1    mariadb   "docker-entrypoint.s…"   db        3 minutes ago   Up 3 minutes (healthy)     3306/tcp
+docker-training2-www-1   nginx     "/docker-entrypoint.…"   www       3 minutes ago   Up 3 minutes (unhealthy)   0.0.0.0:53419->80/tcp
+```
+
+## Comopse and env variables
+
+Starting pre-prod env
+```
+docker compose --env-file .env.pre up -d
+```
+
+https://docs.docker.com/reference/compose-file/interpolation/
+
+## Docker Api
+
+
+`docker ps` without docker ci
+```
+curl -s \
+  --unix-socket /Users/lalyos/.docker/run/docker.sock  \
+  http:/v1.41/containers/json \
+  | jq '.[]|[.Image,.Names,.Status]' -c
+
+```
+Fuul [api docs](https://docs.docker.com/reference/api/engine/)
+
+
+
+## Logging
+
+Docker logging care only about PID1 stdout/stderr
+
+```
+docker run -d ubuntu bash -c 'while true; do date; sleep 1; echo GET /krumpli  ;   done'
+```
+
+logging:
+```
+85886  docker logs ac54578a5fdd
+85887  docker logs ac54578a5fdd --tail
+85888  docker logs ac54578a5fdd --follow
+85889  docker logs ac54578a5fdd --tail 1
+85890  docker logs ac54578a5fdd --tail 1 -f
+```
+
