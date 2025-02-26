@@ -17,7 +17,7 @@ services:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 10s
       timeout: 3s
-      retries: 1
+      retries: 3
 
   generator:
     image: ttl.sh/generator
