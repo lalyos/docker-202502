@@ -41,6 +41,15 @@ services:
     - TITLE=Wednesday Menu
     volumes:
     -  www:/www
+
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+
   traefik:
     image: traefik:1.7-alpine
     container_name: traefik
