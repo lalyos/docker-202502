@@ -5,6 +5,8 @@ services:
     - 80
     volumes:
     - www:/usr/share/nginx/html
+    labels:
+      - "traefik.frontend.rule=Host:www.${DOMAIN}"
 
   db:
     image: mariadb
@@ -24,6 +26,9 @@ services:
     image: adminer
     ports:
     - 8080
+    labels:
+      - "traefik.frontend.rule=Host:adminer.${DOMAIN}"
+
   generator:
     build: generator
     image: ttl.sh/generator
@@ -36,7 +41,25 @@ services:
     - TITLE=Wednesday Menu
     volumes:
     -  www:/www
-
+  traefik:
+    image: traefik:1.7-alpine
+    container_name: traefik
+    restart: always
+    command:
+      - --retry
+      #- --debug
+      - --rest
+      - --docker.domain=${DOMAIN}
+      - --docker.network=traefik
+      - --api.dashboard
+    labels:
+      - "traefik.frontend.rule=Host:traefik.${DOMAIN}"
+      - "traefik.port=8080"
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    
   dozzle:
     image: amir20/dozzle:latest
     volumes:
@@ -47,3 +70,6 @@ services:
 volumes:
   www:
   etlapdb:
+networks:
+  traefik:
+    external: true
