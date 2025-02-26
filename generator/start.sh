@@ -1,7 +1,7 @@
 #!/bin/bash
 
 while true; do
-  echo "<h1>Tuesday Menu v2<h1>" > /www/index.html
+  echo "<h1>${TITLE:-Welcome}<h1>" > /www/index.html
 
   mariadb \
     mysql \
