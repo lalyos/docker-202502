@@ -13,9 +13,17 @@ services:
     volumes:
     - etlapdb:/var/lib/mysql
     - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 3s
+      retries: 1
 
   generator:
     image: ttl.sh/generator
+    depends_on:
+      db:
+        condition: service_healthy
     volumes:
     -  www:/www
 
