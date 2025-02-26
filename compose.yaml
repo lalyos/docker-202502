@@ -20,6 +20,10 @@ services:
       timeout: 5s
       retries: 3
 
+  adminer:
+    image: adminer
+    ports:
+    - 8080
   generator:
     image: ttl.sh/generator
     depends_on:
