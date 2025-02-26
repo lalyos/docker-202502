@@ -25,11 +25,15 @@ services:
     ports:
     - 8080
   generator:
+    build: generator
     image: ttl.sh/generator
+    init: true
     depends_on:
      db:
       condition: service_healthy
     environment:
+    - TRACE=1
+    - TITLE=Wednesday Menu
     volumes:
     -  www:/www
 
