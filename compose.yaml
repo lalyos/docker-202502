@@ -47,6 +47,7 @@ services:
   generator:
     build: generator
     image: ttl.sh/generator
+    init: true
     environment:
       TITLE: ${TITLE:-Menu [dev]}
     depends_on:
