@@ -1,3 +1,11 @@
+## Git repo
+
+```
+ git clone https://github.com/lalyos/docker-202502
+ cd docker-202502
+ ```
+
+
 ## Dockerfile
 
 
