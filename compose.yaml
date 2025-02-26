@@ -5,14 +5,14 @@ services:
     container_name: traefik
     restart: always
     command:
-      - --docker.domain=lvh.me
+      - --docker.domain=${DOMAIN:-lvh.me}
       - --docker.network=traefik
       - --api.dashboard
     labels:
-      - "traefik.frontend.rule=Host:traefik.lvh.me"
+      - "traefik.frontend.rule=Host:traefik.${DOMAIN:-lvh.me}"
       - "traefik.port=8080"
     ports:
-      - 80:80
+      - ${PROXY_PORT:-80}:80
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
