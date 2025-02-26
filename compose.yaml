@@ -1,4 +1,8 @@
 services:
+  adminer:
+    image: adminer
+    ports:
+    - 8080
   www:
     image: nginx
     ports:
