@@ -40,6 +40,7 @@ services:
     init: true
     environment:
       TITLE: ${TITLE:-Menu [dev]}
+      COLOR: ${COLOR:-hotpink}
     depends_on:
       db:
         condition: service_healthy
