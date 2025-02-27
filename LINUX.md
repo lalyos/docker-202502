@@ -1,3 +1,15 @@
+## Alias
+
+If you want shorten long commands typed often use aliases
+
+```
+
+alias dll='docker logs $(docker ps -ql)'
+alias dup='docker compose up -d --build'
+alias drml='docker rm -f $(docker ps -ql)'
+alias drn='docker rename $(docker ps -ql)'
+alias food='docker compose exec db mariadb -ps3cr3t mysql -e "select * from food"'
+```
 
 ## Env vars
 
