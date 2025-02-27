@@ -30,20 +30,27 @@ services:
       - source: title
         target: /etc/myapp/title
     secrets:
+      - source: color
+        target: /etc/myapp/color
     deploy:
       replicas: 3
       labels:
         - "traefik.enable=true"
         - "traefik.frontend.rule=Host:coffee.${DOMAIN:-lvh.me}"
         - "traefik.port=80"
-
     environment:
+      TITLE: ${TITLE:-Coffee [swarm-dev]}
+      COLOR2: ${COLOR:-lime}
 
 configs:
   title:
     external:
       name: ${ENV:-dev}_title
 
+secrets:
+  color:
+    external:
+      name: ${ENV:-dev}_color
 
 networks:
   default:
