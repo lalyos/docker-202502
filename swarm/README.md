@@ -31,3 +31,9 @@ done \
 |sort \
 | uniq -c
 ```
+
+## Stack
+
+```
+docker stack deploy dev --compose-file compose.yaml
+```
