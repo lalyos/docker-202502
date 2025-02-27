@@ -1,0 +1,8 @@
+services:
+  coffee:
+    image: ttl.sh/12factor
+    ports:
+    - 54321:80
+    environment:
+      TITLE: Coffeebreak from compose
+      COLOR2: mediumpurple
