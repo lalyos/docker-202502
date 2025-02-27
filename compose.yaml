@@ -16,6 +16,8 @@ services:
     - traefik
     volumes:
     - www:/usr/share/nginx/html
+    # deploy:
+    #   replicas: 3
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 10s
@@ -35,7 +37,12 @@ services:
       retries: 3
 
   generator:
-    build: generator
+    build: 
+      context: generator
+      platforms:
+      - "linux/amd64"
+      - "linux/arm64"
+      - "linux/arm64/v8"
     image: ttl.sh/generator
     init: true
     environment:
@@ -46,6 +53,23 @@ services:
         condition: service_healthy
     volumes:
     -  www:/www
+  debug:
+    image: alpine
+    profiles:
+      - debug
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM alpine
+        RUN apk add bash curl cmd:dig
+    init: true
+    links:
+    - www:web
+    - db:db
+    command: bash
+    tty: true
+    stdin_open: true
+
   dozzle:
     image: amir20/dozzle:latest
     volumes:
