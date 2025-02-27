@@ -12,6 +12,9 @@ alias ddown='docker compose down'
 alias drml='docker rm -f $(docker ps -ql)'
 alias drn='docker rename $(docker ps -ql)'
 alias food='docker compose exec db mariadb -ps3cr3t mysql -e "select * from food"'
+
+# save all aliases permanently
+alias sav='alias > ~/.aliases'
 ```
 
 ## Env vars
