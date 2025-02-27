@@ -36,3 +36,7 @@ services:
     environment:
       TITLE: Coffeebreak from compose
       COLOR2: mediumpurple
+
+networks:
+  default:
+    name: traefik
