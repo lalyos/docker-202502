@@ -3,6 +3,8 @@ services:
     image: ttl.sh/12factor
     ports:
     - 54321:80
+    deploy:
+      replicas: 3
     environment:
       TITLE: Coffeebreak from compose
       COLOR2: mediumpurple
