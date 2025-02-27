@@ -1,13 +1,19 @@
-name: dev
+name: ${ENV:-dev}
 services:
   adminer:
     image: adminer
     ports:
     - 8080
+    networks:
+    - default
+    - traefik
   www:
     image: nginx
     ports:
     - 80
+    networks:
+    - default
+    - traefik
     volumes:
     - www:/usr/share/nginx/html
     healthcheck:
@@ -45,5 +51,7 @@ volumes:
   etlapdb:
 
 networks:
+  default:
+    name: ${ENV:-dev}
   traefik:
     external: true
