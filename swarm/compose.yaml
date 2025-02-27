@@ -34,8 +34,9 @@ services:
         - "traefik.port=80"
 
     environment:
-      TITLE: Coffeebreak from compose
-      COLOR2: mediumpurple
+      TITLE: Coffeebreak from SWARM
+      COLOR2: Lime
+
 
 networks:
   default:
