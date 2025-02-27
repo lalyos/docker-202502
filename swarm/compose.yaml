@@ -28,6 +28,11 @@ services:
     - 54321:80
     deploy:
       replicas: 3
+      labels:
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:coffee.${DOMAIN:-lvh.me}"
+        - "traefik.port=80"
+
     environment:
       TITLE: Coffeebreak from compose
       COLOR2: mediumpurple
