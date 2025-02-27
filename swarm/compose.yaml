@@ -1,4 +1,27 @@
 services:
+
+  traefik:
+    image: traefik:1.7-alpine
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - "traefik.frontend.rule=Host:traefik.${DOMAIN:-lvh.me}"
+        - "traefik.port=8080"
+
+    command:
+      - --docker.domain=${DOMAIN:-lvh.me}
+      - --docker.network=traefik
+      - --api.dashboard
+      - --docker.swarmMode
+    # labels:
+    #   - "traefik.frontend.rule=Host:traefik.${DOMAIN:-lvh.me}"
+    #   - "traefik.port=8080"
+    ports:
+      - 44444:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   coffee:
     image: ttl.sh/12factor
     ports:
