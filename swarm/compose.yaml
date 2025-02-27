@@ -26,6 +26,10 @@ services:
     image: ttl.sh/12factor
     ports:
     - 54321:80
+    configs:
+      - source: title
+        target: /etc/myapp/title
+    secrets:
     deploy:
       replicas: 3
       labels:
@@ -34,8 +38,11 @@ services:
         - "traefik.port=80"
 
     environment:
-      TITLE: Coffeebreak from SWARM
-      COLOR2: Lime
+
+configs:
+  title:
+    external:
+      name: ${ENV:-dev}_title
 
 
 networks:
